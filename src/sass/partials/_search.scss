@@ -31,7 +31,7 @@
 
     }
 
-    .button-search{
+    #button-search{
       width: 130px;
       height: 50px;
       line-height: 50px;
@@ -41,8 +41,10 @@
       letter-spacing: 5px;
       font-weight: 600;
       margin: auto;
+      cursor: pointer;
 
     }
   }
 
 }
+

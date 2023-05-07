@@ -52,18 +52,18 @@
       <h1 class="section-title">SEARCH</h1>
       <div class="search-bar container">
         <p>Name</p>
-        <input type="text">
-        <div class="button-search">SEARCH</div>
+        <input type="text" id="findSong">
+        <div id="button-search">SEARCH</div>
       </div>
-      <!-- <div id="song-list" class="song-list container">
-        <script id="audio-player-template" type="text/x-handlebars-template">
+      <div id="search-song-list" class="search-song-list container">
+        <script id="search-song-template" type="text/x-handlebars-template">
           <div class="single-player">
             <li class="song">
               <div class="song-title">
                 <p>{{name}} - {{title}}</p>
               </div>
               <div class="player{{id}}">
-                <audio crossorigin>
+                <audio controls>
                   <source id="song-container" src="songs/{{filename}}" type="audio/mpeg">
                 </audio>
               </div>
@@ -74,7 +74,7 @@
             </li>
           </div>
         </script>
-      </div> -->
+      </div>
     </section>
     <section id="discover">
       <div id="render-song" class="render-song container"></div>

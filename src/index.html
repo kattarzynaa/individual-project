@@ -7,8 +7,9 @@
   <title>Music APP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/greghub/green-audio-player/dist/css/green-audio-player.min.css">
 </head>
 <body>
   <header class="header">
@@ -18,25 +19,69 @@
       <h2 class="sub-copy">ENGAGE <br> IN <br> ART</h2>
     </div>
   </div>
+  <div class="main-nav">
+    <a href="#home">Home</a>
+    <a href="#search">Search</a>
+    <a href="#discover">Discover</a>
+  </div>
   </header>
-  <div id="widgets" class="widgets-container">
-    <div class="main-nav">
-      <a href="#home">Home</a>
-      <a href="#search">Search</a>
-      <a href="#discover">Discover</a>
-    </div>
+  <div id="pages" class="pages-container">
     <section id="home">
-      <div id="song-list" class="song-list container"></div>
+      <div id="song-list" class="song-list container">
+        <script id="audio-player-template" type="text/x-handlebars-template">
+          <div class="single-player">
+            <li class="song">
+              <div class="song-title">
+                <p>{{name}} - {{title}}</p>
+              </div>
+              <div class="player{{id}}">
+                <audio crossorigin>
+                  <source id="song-container" src="songs/{{filename}}" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="song-description">
+                <p class="small-text cat">Categories: {{categories}}</p>
+                <p class="small-text rank">#{{ranking}} in the ranking</p>
+              </div>
+            </li>
+          </div>
+        </script>
+      </div>
     </section>
     <section id="search">
-      <div class="search-bar container"></div>
-      <div class="search-list container"></div>
+      <h1 class="section-title">SEARCH</h1>
+      <div class="search-bar container">
+        <p>Name</p>
+        <input type="text">
+        <div class="button-search">SEARCH</div>
+      </div>
+      <!-- <div id="song-list" class="song-list container">
+        <script id="audio-player-template" type="text/x-handlebars-template">
+          <div class="single-player">
+            <li class="song">
+              <div class="song-title">
+                <p>{{name}} - {{title}}</p>
+              </div>
+              <div class="player{{id}}">
+                <audio crossorigin>
+                  <source id="song-container" src="songs/{{filename}}" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="song-description">
+                <p class="small-text cat">Categories: {{categories}}</p>
+                <p class="small-text rank">#{{ranking}} in the ranking</p>
+              </div>
+            </li>
+          </div>
+        </script>
+      </div> -->
     </section>
     <section id="discover">
       <div id="render-song" class="render-song container"></div>
     </section>
   </div>
   <div class="subscribe">
+    <p class="subscribe-header">SUBSCRIBE <span class="bold-text">NOW</span></p>
     <div class="content-container">
       <div class="button-join">JOIN NOW</div>
       <div class="album-container">
@@ -47,6 +92,8 @@
     </div>
   </div>
   <footer class="footer"><p>All rights reserved</p></footer>
-  <script src="js/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/greghub/green-audio-player/dist/js/green-audio-player.min.js"></script>
+  <script src="js/app.js" type="module"></script>
 </body>
 </html>

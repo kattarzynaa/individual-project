@@ -1,0 +1,56 @@
+
+.song-list{
+  margin-top: 200px;
+}
+
+.progress__pin{
+  background-color: $colorRed !important;
+}
+
+.song-list{
+  margin-top: 50px;
+  justify-content: center;
+  align-content: center;
+}
+
+.single-player{
+  width: 700px;
+  height: 300px;
+  letter-spacing: 2px;
+
+  .song-title{
+    font-size: 24px;
+    font-weight: 600;
+    padding: 20px;
+
+  }
+
+  .green-audio-player{
+    margin: 0 auto;
+  }
+
+  .song-description{
+    width: 400px;
+    height: 80px;
+    margin-left: 150px;
+    display: flex;
+
+    .small-text{
+      font-size: 12px;
+      display: block;
+      float: left;
+      justify-content: space-between;
+      //float: left;
+    }
+
+    .cat{
+      padding-left: 0;
+    }
+
+    .rank{
+      padding-right: 0;
+    }
+  }
+
+
+}

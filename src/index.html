@@ -62,8 +62,8 @@
               <div class="song-title">
                 <p>{{name}} - {{title}}</p>
               </div>
-              <div class="player{{id}}">
-                <audio controls>
+              <div class="search-player{{id}}">
+                <audio crossorigin>
                   <source id="song-container" src="songs/{{filename}}" type="audio/mpeg">
                 </audio>
               </div>
@@ -77,13 +77,37 @@
       </div>
     </section>
     <section id="discover">
-      <div id="render-song" class="render-song container"></div>
+      <h1 class="section-title">DISCOVER</h1>
+      <div class="search-bar container">
+        <div id="button-discover">Give it a try!</div>
+      </div>
+      <div id="discover-song-list" class="discover-song-list container">
+        <script id="discover-song-template" type="text/x-handlebars-template">
+          <div class="single-player">
+            <li class="song">
+              <div class="song-title">
+                <p>{{name}} - {{title}}</p>
+              </div>
+              <div class="discover-player{{id}}">
+                <audio crossorigin>
+                  <source id="song-container" src="songs/{{filename}}" type="audio/mpeg">
+                </audio>
+              </div>
+              <div class="song-description">
+                <p class="small-text cat">Categories: {{categories}}</p>
+                <p class="small-text rank">#{{ranking}} in the ranking</p>
+              </div>
+            </li>
+          </div>
+        </script>
+      </div>
+      <p>All rights reserved</p>
     </section>
   </div>
   <div class="subscribe">
     <p class="subscribe-header">SUBSCRIBE <span class="bold-text">NOW</span></p>
     <div class="content-container">
-      <div class="button-join">JOIN NOW</div>
+      <div id="button-join">JOIN NOW</div>
       <div class="album-container">
         <div class="subscribe-image"></div>
         <p class="album-text"><span class="bold-text">NEW ALBUM</span> <br> Avalible for subsribers</p>

@@ -1,20 +1,46 @@
 import {settings, select} from './settings.js';
 import Song from './song.js';
 import FindSong from './findSong.js';
+import DiscoverSong from './discoverSong.js';
 
 const Page ={
 
   renderSongs: function(){
     const thisPage = this;
-    
-    //console.log('thisPage.data: ', thisPage.data.songs);
-
-
     for(let songsData in thisPage.data.songs){
-      new Song(thisPage.data.songs[songsData].id, thisPage.data.songs[songsData].filename, thisPage.data.songs[songsData].ranking, thisPage.data.songs[songsData].categories, thisPage.data.songs[songsData].title);
+      const authorName = thisPage.renderAuthor(thisPage.data.songs[songsData].author);
+      new Song(thisPage.data.songs[songsData].id, thisPage.data.songs[songsData].filename, thisPage.data.songs[songsData].ranking, thisPage.data.songs[songsData].categories, thisPage.data.songs[songsData].title, authorName );
       //eslint-disable-next-line
       new GreenAudioPlayer('.player' + thisPage.data.songs[songsData].id);
     }
+  },
+
+  renderAuthor: function(authorId){
+    const thisPage = this;
+    for(let authorDbId in thisPage.data.authors){
+      if(authorId == thisPage.data.authors[authorDbId].id){
+        return thisPage.data.authors[authorDbId].name;
+      }
+    }
+  },
+
+
+  discoverSong: function(songs){
+    const thisPage = this; 
+    let max = 0; 
+    //eslint-disable-next-line
+    for(let number of songs){ // pętla po piosenkach
+      max++;
+    } 
+    const random = Math.ceil(Math.random()*max);
+    for(let song of songs){ // pętla po piosenkach
+      if(song.id == random){
+        const authorName = thisPage.renderAuthor(song.author);
+        new DiscoverSong(song.id, song.filename, song.ranking, song.categories, song.title, authorName);
+        //eslint-disable-next-line
+        new GreenAudioPlayer('.discover-player' + song.id);
+      }
+    } 
   },
 
 
@@ -23,6 +49,7 @@ const Page ={
 
     thisPage.data = {};
     const url = settings.db.songsUrl + '/' + settings.db.songs;
+    const urlAuthors = settings.db.songsUrl + '/' + settings.db.authors;
 
     fetch(url)
       .then(function(rawResponse){
@@ -30,9 +57,16 @@ const Page ={
       })
       .then(function(parsedResponse){
         thisPage.data.songs = parsedResponse;
-        thisPage.renderSongs();
-        //thisPage.findSong(thisPage.data.songs); //wywołać po kliknięciu
+      });
 
+    fetch(urlAuthors)
+      .then(function(rawResponse){
+        return rawResponse.json();
+      })
+      .then(function(parsedResponse){
+        thisPage.data.authors = parsedResponse;
+        thisPage.renderSongs();
+        thisPage.discoverSong(thisPage.data.songs);
       });
 
   },
@@ -85,7 +119,7 @@ const Page ={
   },
 
   findSong: function(songs){
-    //const thisPage = this;
+    const thisPage = this;
 
     let findThisSong = document.getElementById('findSong').value;  //musi przyjąć litery z inputa
 
@@ -95,10 +129,10 @@ const Page ={
     for(let song of songs){ // pętla po piosenkach
       const songName = song.filename.toLowerCase(); //filename do małych liter
       if(songName.includes(findThisSong)){ //sprawdź czy zawiera litery jeśli tak - wygeneruj listę
-        console.log(song);
-        new FindSong(song.id, song.filename, song.ranking, song.categories, song.title);
+        const authorName = thisPage.renderAuthor(song.author);
+        new FindSong(song.id, song.filename, song.ranking, song.categories, song.title, authorName);
         //eslint-disable-next-line
-        new GreenAudioPlayer('.player' + song.id); //czemu nie działa plugin?
+        new GreenAudioPlayer('.search-player' + song.id);
       } 
     }
 
@@ -108,11 +142,35 @@ const Page ={
     const thisPage = this; 
     
     const searchButton = document.querySelector(select.containerOf.searchBtn);
+    const tryButton = document.querySelector(select.containerOf.tryBtn);
+    const joinButton = document.querySelector(select.button.joinButton);
 
-    console.log(select.containerOf.searchSongList);
+    //console.log(select.containerOf.searchSongList);
 
     searchButton.addEventListener('click', function(){
+
+      const songSearchContainer = document.querySelector(select.containerOf.searchSongList);
+
+      while(songSearchContainer.hasChildNodes()){
+        songSearchContainer.removeChild(songSearchContainer.firstChild);
+      }
+
       thisPage.findSong(thisPage.data.songs);
+    });
+
+    tryButton.addEventListener('click', function(){
+
+      const songDiscoverContainer = document.querySelector(select.containerOf.discoverSongList);
+
+      while(songDiscoverContainer.hasChildNodes()){
+        songDiscoverContainer.removeChild(songDiscoverContainer.firstChild);
+      }
+
+      thisPage.discoverSong(thisPage.data.songs);
+    });
+
+    joinButton.addEventListener('click', function(){
+      open();
     });
 
   },
